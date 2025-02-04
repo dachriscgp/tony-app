@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tony Client Portfolio - Présentation</title>
+    <link rel="stylesheet" href="/fonts-6/css/all.css">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <nav>
+        <div class="bar-nav">
+            <i class="fa-solid fa-chevron-left"></i>
+            <h3>
+                PRESENTATION
+            </h3>
+            <i class="fa-solid fa-link"></i>
+            <i class="fa-solid fa-user-plus"></i>
+            <div class="menu-list">
+                <i class="fa-solid fa-ellipsis-vertical profil-view"></i>
+                <div class="list-menu hidden">
+                    <a href="">Link</a>
+                    <a href="">Embed</a>
+                    <a href="">à propos</a>
+                    <a href="">Restaurer</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <main>
+        <div class="container">
+
+            <form id="form-id">
+                <div class="form-group">
+                    <label for="pickup">NOM TVA :</label>
+                    <input type="text" id="pickup" placeholder="Votre réponse" required>
+                </div>
+                <div class="form-group">
+                    <label for="destination">NOM COMPLET (Propriétaire)</label>
+                    <input type="text" id="destination" placeholder="Votre réponse" required>
+                </div>
+                <div class="form-group">
+                    <label for="time">Date :</label>
+                    <input type="datetime-local" id="time" required>
+                </div>
+                <div class="form-group">
+                    <label for="quartier">Adresses</label>
+                    <div class="commune">
+                        <input type="radio" id="goma" name="commune" value="Goma" required>
+                        <label for="goma">Commune de Goma</label>
+                    </div>
+                    <div class="commune">
+                        <input type="radio" id="karisimbi" name="commune" value="Karisimbi" required>
+                        <label for="karisimbi">Commune de Karisimbi</label>
+                    </div>
+                    <select name="quartier" id="quartier" required>
+                        <option value="">-- Selectionnez votre Quartier --</option>
+                        <option value="Mabanga-Nord">Mabanga-Nord</option>
+                        <option value="Mabanga-Sud">Mabanga-Sud</option>
+                        <option value="Himbi">Himbi</option>
+                    </select>
+
+                </div>
+
+                <button type="submit" class="btn-primary">Suivant</button>
+            </form>
+
+
+
+        </div>
+    </main>
+
+
+    <footer class="app-footer">
+        <p>
+            copyright © 2025 TONY CLIENT PORTOFOLIO
+        </p>
+    </footer>
+
+
+    <script src="/script.js"></script>
+</body>
+
+</html>
