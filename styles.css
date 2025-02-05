@@ -114,6 +114,7 @@ footer {
     border-radius: var(--border-radius);
     cursor: pointer;
     transition: 0.4s ease-in-out;
+    margin-left: 0.5rem;
 }
 
 .bar-nav i:hover {
@@ -317,6 +318,87 @@ button:hover {
     text-align: center;
     padding: 1rem;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* TOGGLE THEME */
+.dark-mode {
+    background-color: var(--color-black);
+    color: var(--dark-text);
+}
+
+.dark-mode .flux, 
+.dark-mode .bar-nav{
+    background-color: rgb(19, 18, 32);
+}
+
+.dark-mode i {
+    color: var(--color-primary);
+}
+
+.dark-mode .bar-nav,
+.dark-mode .bar-nav i {
+    color: var(--color-white);
+}
+
+.dark-mode .col {
+    background-color: var(--color-dark);
+    color: var(--color-white);
+}
+
+.dark-mode input, .dark-mode button, .dark-mode table, .dark-mode #sales-log div {
+    background-color: #555;
+    color: var(--dark-text);
+    border-color: #666;
+}
+
+.dark-mode i:hover {
+    background-color: var(--color-secondary);
+    color: rgb(146, 146, 255);
+}
+
+.dark-mode .list-menu a:hover {
+    background-color: hsl(260, 55%, 13%);
+}
+
+.dark-mode .app-footer {
+    background-color: var(--color-dark);
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

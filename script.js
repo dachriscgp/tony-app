@@ -58,7 +58,7 @@ addGoBackEventToClass('fa-chevron-left');
 
 
 
-// ALLER DANS L'OPTION PRESENTATION
+// ALLER DANS LES OPTIONS
 function linkDivToPage(className, pageUrl) {
     const div = document.querySelector(`.${className}`);
     if (div) {
@@ -81,6 +81,9 @@ linkDivToPage('emballage', '/pages/emballage.html');
 
 
 
+function toggleTheme() {
+    document.body.classList.toggle("dark-mode");
+}
 
 
 
