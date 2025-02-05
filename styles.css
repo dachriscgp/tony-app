@@ -114,7 +114,6 @@ footer {
     border-radius: var(--border-radius);
     cursor: pointer;
     transition: 0.4s ease-in-out;
-    margin-left: 0.5rem;
 }
 
 .bar-nav i:hover {
@@ -289,6 +288,12 @@ button:hover {
     font-family: Poppins, sans-serif;
 } */
 
+select#quartier {
+    background-color: rgb(241, 241, 241);
+    color: var(--color-black);
+}
+
+
 .commune {
     width: 10%;
     display: flex;
@@ -348,11 +353,11 @@ button:hover {
 /* TOGGLE THEME */
 .dark-mode {
     background-color: var(--color-black);
-    color: var(--dark-text);
 }
 
 .dark-mode .flux, 
-.dark-mode .bar-nav{
+.dark-mode .bar-nav,
+.dark-mode .form-group {
     background-color: rgb(19, 18, 32);
 }
 
@@ -361,7 +366,8 @@ button:hover {
 }
 
 .dark-mode .bar-nav,
-.dark-mode .bar-nav i {
+.dark-mode .bar-nav i,
+.dark-mode .form-group {
     color: var(--color-white);
 }
 
@@ -370,10 +376,11 @@ button:hover {
     color: var(--color-white);
 }
 
-.dark-mode input, .dark-mode button, .dark-mode table, .dark-mode #sales-log div {
-    background-color: #555;
-    color: var(--dark-text);
-    border-color: #666;
+.dark-mode input,
+.dark-mode select#quartier  {
+    background-color: rgb(36, 30, 43);
+    color: var(--color-white);
+    border: 0.5px solid rgb(139, 42, 168);
 }
 
 .dark-mode i:hover {
@@ -387,6 +394,10 @@ button:hover {
 
 .dark-mode .app-footer {
     background-color: var(--color-dark);
+}
+
+.dark-mode .bar-nav {
+    border-bottom: 0.5px solid rgb(109, 88, 168);;
 }
 
 
