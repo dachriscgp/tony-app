@@ -70,61 +70,11 @@ function linkDivToPage(className, pageUrl) {
     }
 }
 
-linkDivToPage('presentation', '/Pages/presentation.html');
+linkDivToPage('presentation', '/pages/presentation.html');
 
+linkDivToPage('distribution', '/pages/distribution.html');
 
-
-
-
-
-
-
-
-
-
-//ALLER DANS L'OPTION DISTRIBUTION
-function linkDivToPage(className, pageUrl) {
-    const div = document.querySelector(`.${className}`);
-    if (div) {
-        div.addEventListener('click', () => {
-            window.location.href = pageUrl;
-        });
-    } else {
-        console.error(`Aucun élément avec la class "${className}" trouvé.`);
-    }
-}
-
-linkDivToPage('distribution', '/Pages/distribution.html');
-
-
-
-
-
-
-//ALLER DANS L'OPTION PARC D'EMBALLAGE
-function linkDivToPage(className, pageUrl) {
-    const div = document.querySelector(`.${className}`);
-    if (div) {
-        div.addEventListener('click', () => {
-            window.location.href = pageUrl;
-        });
-    } else {
-        console.error(`Aucun élément avec la class "${className}" trouvé.`);
-    }
-}
-
-linkDivToPage('emballage', '/Pages/emballage.html');
-
-
-
-
-
-
-
-
-
-
-
+linkDivToPage('emballage', '/pages/emballage.html');
 
 
 
