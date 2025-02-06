@@ -70,11 +70,11 @@ function linkDivToPage(className, pageUrl) {
     }
 }
 
-linkDivToPage('presentation', '/pages/presentation.html');
+linkDivToPage('presentation', '/Frontend/pages/presentation.html');
 
-linkDivToPage('distribution', '/pages/distribution.html');
+linkDivToPage('distribution', '/Frontend/pages/distribution.html');
 
-linkDivToPage('emballage', '/pages/emballage.html');
+linkDivToPage('emballage', '/Frontend/pages/emballage.html');
 
 
 
