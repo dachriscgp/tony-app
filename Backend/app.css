@@ -152,6 +152,7 @@ body .add-form {
 
 .bar-nav i:hover {
     border-radius: var(--border-radius);
+    background-color: var(--color-light);
 }
 
 .bar-nav h3 {
@@ -217,15 +218,94 @@ body .add-form {
 
 
 
-
-
-
 /* ------- GENERAL STYLES -------- */
 main .container {
-    height: 100vh;
+    width: 100vw;
+}
+
+.container .title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+}
+
+.container .flux {
+    background-color: var(--color-light);
+    padding: var(--card-padding);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+}
+
+.tool {
+    height: fit-content;
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    border: 0.5px solid var(--color-gray);
+    cursor: pointer;
+}
+
+.tool p {
+    font-size: 0.6rem;
+}
+
+.tool .tool-icons {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+}
+
+.sorts {
+    margin-top: 1rem;
+    padding: var(--card-padding);
+    background-color: var(--color-light);
+}
+
+.sorts-dates {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.date-container i {
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.form-list {
+    margin: 0 auto;
+    text-align: left;
+}
+
+.form-item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 0.5px solid var(--color-gray);
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+    transition: 0.3s ease-in-out;
+}
+
+.form-item:hover {
+    background-color: var(--color-fill);
+    color: var(--color-white);
+}
+
+.form-item span:last-child {
+    background-color: var(--color-danger);
+    padding: 0 1rem;
+    border-radius: 1rem;
+    color: var(--color-white);
 }
 
 
+
+
+.view-all {
+    margin-top: 1rem;
+}
 
 
 
@@ -335,18 +415,13 @@ select#quartier {
     background-color: rgb(19, 18, 32);
 }
 
-.dark-mode i {
-    color: var(--color-primary);
-}
-
 .dark-mode .bar-nav,
 .dark-mode .bar-nav i,
 .dark-mode .form-group {
     color: var(--color-white);
 }
 
-.dark-mode .col {
-    background-color: var(--color-dark);
+.dark-mode .tool {
     color: var(--color-white);
 }
 
@@ -375,6 +450,7 @@ select#quartier {
 }
 
 .dark-mode .adding {
+    color: var(--color-secondary);
     background-color: var(--color-white);
 }
 
@@ -386,7 +462,15 @@ select#quartier {
     color: var(--color-white);
 }
 
+.dark-mode .sorts {
+    color: white;
+    background-color: rgb(19, 18, 32);
+}
 
+.dark-mode .form-item:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
 
 
 

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des PDFs</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h2>Liste des PDFs générés</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Lieu</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="pdf-list">
+            <!-- Les PDFs seront affichés ici -->
+        </tbody>
+    </table>
+
+    <script>
+        async function fetchPDFs() {
+            const response = await fetch("http://localhost:3000/pdfs");
+            const pdfs = await response.json();
+            const pdfList = document.getElementById("pdf-list");
+
+            pdfList.innerHTML = "";
+            pdfs.forEach(pdf => {
+                pdfList.innerHTML += `
+                    <tr>
+                        <td>${pdf.name}</td>
+                        <td>${pdf.location}</td>
+                        <td>${pdf.status}</td>
+                        <td>
+                            <a href="${pdf.pdfPath}" target="_blank">Voir</a> |
+                            <a href="${pdf.pdfPath}" download>Télécharger</a> |
+                            <button onclick="sendEmail('${pdf.pdfPath}')">Envoyer par Email</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        async function sendEmail(pdfPath) {
+            const email = prompt("Entrez l'adresse email :");
+            if (!email) return;
+
+            const response = await fetch("http://localhost:3000/send-email", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, pdfPath })
+            });
+
+            const result = await response.json();
+            alert(result.message);
+        }
+
+        fetchPDFs();
+    </script>
+</body>
+</html>

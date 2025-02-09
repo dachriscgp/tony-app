@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TONY - DASHBOARD</title>
+    <link rel="stylesheet" href="/Frontend/fonts-6/css/all.css">
+    <link rel="stylesheet" href="/Backend/app.css">
+</head>
+
+<body>
+    <div class="add-user adding">
+        <i class="fa-solid fa-user-plus"></i>
+    </div>
+    <div class="add-form adding plustogo">
+        <i class="fa-solid fa-plus"></i>
+    </div>
+
+    <nav>
+        <div class="bar-nav">
+            <h3>
+                DASHBOARD
+            </h3>
+            <i class="fa-solid fa-search"></i>
+            <i class="fa-solid fa-sun" onclick="toggleTheme()"></i>
+            <div class="menu-list">
+                <i class="fa-solid fa-ellipsis-vertical profil-view"></i>
+                <div class="list-menu hidden">
+                    <a href="" style="display: flex;">
+                        <div><i class="fa-solid fa-bell"></i></div>
+                        <div class="col-list-menu">
+                            Notifications
+                            <p class="text-muted">Block, allow, prioritize</p>
+                        </div>
+                    </a>
+                    
+                    <a href="" style="display: flex;">
+                        <div ><i class="fa-solid fa-sun"></i></div>
+                        <div class="col-list-menu">
+                            Display
+                            <p class="text-muted">Dark Mode, Light</p>
+                        </div>
+                    </a>
+
+                    <a href="" style="display: flex;">
+                        <div ><i class="fa-solid fa-sun"></i></div>
+                        <div class="col-list-menu">
+                            About
+                            <p class="text-muted">Status</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <main>       
+        <div class="container">
+            <div class="title text-muted">
+                <p>Last 7 days perfomance</p>
+                <i class="fa-solid fa-circle-exclamation"></i>
+            </div>
+            <div class="flux">
+                <div class="tool">
+                    <i class="fa-solid fa-dashboard tool-icons"></i>
+                    <h5>
+                        23 <i class="fa-solid fa-arrow-up-right-dots" style="color: var(--color-fill);"></i>
+                    </h5>
+                    <p class="text-muted ">Listes des sheets</p>
+                </div>
+
+                <div class="tool">
+                    <i class="fa-solid fa-table-cells tool-icons"></i>
+                    <h5>
+                        19 <i class="fa-solid fa-arrow-up-right-dots" style="color: var(--color-fill);"></i>
+                    </h5>
+                    <p class="text-muted ">Catalogues</p>
+                </div>
+
+                <div class="tool">
+                    <i class="fa-solid fa-arrows-turn-right tool-icons"></i>
+                    <h5>
+                        -- <i class="fa-solid fa-arrow-up-right-dots" style="color: var(--color-fill);"></i>
+                    </h5>
+                    <p class="text-muted ">Analyse views</p>
+                </div>
+            </div>
+
+            <div class="sorts">
+                <div class="sorts-dates date-container">
+                    <i id="prevDate" class="fa-solid fa-chevron-left"></i>
+                    <span id="currentDate"></span>
+                    <i id="nextDate" class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+            <div class="sorts">
+                <h5>Listes de sheets</h5>
+                <div id="formList" class="form-list">
+                    <!-- Les formulaires liés à la date s'afficheront ici -->
+                </div>
+            </div>
+            <button class="view-all">
+                Voir tout
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- <footer class="app-footer">
+        <p>
+            copyright © 2025 TONY CLIENT PORTOFOLIO
+        </p>
+    </footer> -->
+
+
+    <script src="/Backend/main.js"></script>
+</body>
+
+</html>
