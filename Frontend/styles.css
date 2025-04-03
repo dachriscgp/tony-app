@@ -74,6 +74,12 @@ main {
     color: var(--color-gray);
 }
 
+.text-italique {
+    font-style: italic;
+    font-weight: 300;
+    font-size: 0.8rem;
+}
+
 footer {
     width: 100%;
     margin: 0 auto;

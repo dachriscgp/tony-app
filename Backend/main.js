@@ -45,7 +45,7 @@ function linkPlusToPage(className, pageUrl) {
     }
 }
 
-linkPlusToPage('plustogo', '/Frontend/pages/presentation.html');
+linkPlusToPage('plustogo', '/Frontend/index.html');
 
 
 
@@ -63,6 +63,7 @@ const currentDateElem = document.getElementById("currentDate");
 const prevDateBtn = document.getElementById("prevDate");
 const nextDateBtn = document.getElementById("nextDate");
 const formListElem = document.getElementById("formList");
+
 
 const formsData = {
     "2025-02-09": [
@@ -117,3 +118,96 @@ nextDateBtn.addEventListener("click", () => {
 
 // Initialisation
 updateDateDisplay();
+
+
+
+
+
+
+
+
+
+
+
+
+// Calculer la liste des sheets
+document.addEventListener("DOMContentLoaded", function() {
+    const countSheet = document.querySelector(".countSheet");
+    const formList = document.querySelector(".form-list");
+        const prevDate = document.getElementById("prevDate");
+        const prevNext = document.getElementById("prevNext");
+
+        function updateCount() {
+            if (countSheet && formList) {
+                const count = formList.querySelectorAll(".form-item").length;
+                countSheet.textContent = count;
+            }
+        }
+
+    // Initialisation
+    updateCount();
+
+    if (prevDate) prevDate.addEventListener("click", updateCount);
+    if (nextDate) nextDate.addEventListener("click", updateCount);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const express = require("express");
+const fs = require("fs");
+const path = require("path");
+const PDFDocument = require("pdfkit");
+const cors = require("cors");
+
+const app = express();
+const PORT = 3000;
+
+app.use(cors());
+app.use(express.json());
+app.use(express.static("public"));
+
+// Endpoint pour générer un PDF
+app.post("/generate-pdf", (req, res) => {
+    const { pickup, categories, ownerName, ownerPhone, commune, quartier, rue, managerName, managerPhone } = req.body;
+    
+    const doc = new PDFDocument();
+    const fileName = `PDV_${Date.now()}.pdf`;
+    const filePath = path.join(__dirname, "public", fileName);
+    
+    doc.pipe(fs.createWriteStream(filePath));
+    
+    doc.fontSize(20).text("Fiche Point de Vente", { align: "center" });
+    doc.moveDown();
+    
+    doc.fontSize(14).text(`Nom PDV : ${pickup}`);
+    doc.text(`Type de point de vente : ${categories}`);
+    doc.text(`Propriétaire : ${ownerName}`);
+    doc.text(`Téléphone (Propriétaire) : ${ownerPhone}`);
+    doc.text(`Commune : ${commune}`);
+    doc.text(`Quartier : ${quartier}`);
+    doc.text(`Rue : ${rue}`);
+    doc.text(`Gérant : ${managerName}`);
+    doc.text(`Téléphone (Gérant) : ${managerPhone}`);
+    
+    doc.end();
+    
+    res.json({ success: true, url: `http://localhost:${PORT}/${fileName}` });
+});
+
+app.listen(PORT, () => {
+    console.log(`Serveur backend lancé sur http://localhost:${PORT}`);
+});
+

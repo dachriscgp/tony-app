@@ -10,10 +10,23 @@
 </head>
 
 <body>
+
+    <!-- FENETRE POPUP -->
+    <div class="popup">
+        <div class="modal">
+            <h2>Voulez-vous créer un nouveau formulaire?</h2>
+            <div class="validation">
+                <i id="close" class="fa-solid fa-close close"></i>
+                <i class="fa-solid fa-check"></i>
+            </div>
+        </div>
+    </div>
+
+
     <div class="add-user adding">
         <i class="fa-solid fa-user-plus"></i>
     </div>
-    <div class="add-form adding plustogo">
+    <div class="add-form adding plustogo" onmousemove="Hello">
         <i class="fa-solid fa-plus"></i>
     </div>
 
@@ -65,16 +78,17 @@
             <div class="flux">
                 <div class="tool">
                     <i class="fa-solid fa-dashboard tool-icons"></i>
-                    <h5>
-                        23 <i class="fa-solid fa-arrow-up-right-dots" style="color: var(--color-fill);"></i>
-                    </h5>
+                    <div class="count-col">
+                        <h5 id="countSheets" class="countSheet">19</h5>
+                        <i class="fa-solid fa-arrow-trend-up" style="color: var(--color-fill);"></i>
+                    </div>
                     <p class="text-muted ">Listes des sheets</p>
                 </div>
 
                 <div class="tool">
                     <i class="fa-solid fa-table-cells tool-icons"></i>
                     <h5>
-                        19 <i class="fa-solid fa-arrow-up-right-dots" style="color: var(--color-fill);"></i>
+                        66 <i class="fa-solid fa-arrow-up-right-dots" style="color: var(--color-fill);"></i>
                     </h5>
                     <p class="text-muted ">Catalogues</p>
                 </div>

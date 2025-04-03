@@ -89,30 +89,6 @@ function toggleTheme() {
 
 
 
-// // Lien de l'API Google Sheets
-// const sheetURL = "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/gviz/tq?tqx=out:json";
-
-// // Fonction pour récupérer les données de la feuille
-// async function fetchSheetData() {
-//     try {
-//         const response = await fetch(sheetURL);
-//         const text = await response.text();
-
-//         // Extraction des données JSON
-//         const json = JSON.parse(text.substring(47).slice(0, -2));
-//         const rows = json.table.rows;
-
-//         // Parcourir les données et remplir les champs
-//         const firstRow = rows[0].c; // Par exemple, prendre la première ligne
-//         document.getElementById("name").value = firstRow[0].v; // Nom
-//         document.getElementById("email").value = firstRow[2].v; // Email
-//     } catch (error) {
-//         console.error("Erreur lors de la récupération des données :", error);
-//     }
-// }
-
-// // Exécuter la fonction après le chargement de la page
-// document.addEventListener("DOMContentLoaded", fetchSheetData);
 
 
 
@@ -124,18 +100,106 @@ function toggleTheme() {
 
 
 
-// // Gestion du formulaire
-// document.getElementById('taxiForm').addEventListener('submit', function (e) {
-//     e.preventDefault();
 
-//     const pickup = document.getElementById('pickup').value;
-//     const destination = document.getElementById('destination').value;
-//     const time = document.getElementById('time').value;
+document.getElementById("form-id").addEventListener("submit", async function (event) {
+    event.preventDefault();
 
-//     if (pickup && destination && time) {
-//         document.getElementById('status').innerText =
-//             `Taxi commandé ! Départ : ${pickup}, Destination : ${destination}, Heure : ${new Date(time).toLocaleString()}`;
-//     } else {
-//         alert("Veuillez remplir tous les champs.");
-//     }
-// });
+    const formData = {
+        pickup: document.getElementById("pickup").value,
+        categories: document.getElementById("categories").value,
+        destination: document.getElementById("destination").value,
+        phone: document.getElementById("phone").value,
+        commune: document.querySelector("input[name='commune']:checked")?.value,
+        quartier: document.getElementById("quartier").value,
+        reference: document.getElementById("destination").value
+    };
+
+    const response = await fetch("http://localhost:3000/submit-form", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+    });
+
+    if (response.ok) {
+        const result = await response.json();
+        addToList(result);
+    }
+});
+
+function addToList(data) {
+    const formList = document.getElementById("formList");
+    const div = document.createElement("div");
+    div.classList.add("form-item");
+
+    div.innerHTML = `
+        <span>${data.name}</span> 
+        <span>${data.pdv}</span> 
+        <span>${data.status}</span>
+        <button onclick="openPdf('${data.pdfUrl}')">Ouvrir PDF</button>
+    `;
+
+    formList.appendChild(div);
+}
+
+function openPdf(url) {
+    window.open(url, "_blank");
+}
+
+
+
+
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("form-id");
+    const formList = document.getElementById("formList");
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // Récupérer les valeurs du formulaire
+        const formData = {
+            proprietaire: document.getElementById("destination").value,
+            nomPDV: document.getElementById("pickup").value,
+            typePDV: document.getElementById("categories").value,
+            telephone: document.getElementById("phone").value,
+            commune: document.querySelector('input[name="commune"]:checked')?.value || "",
+            quartier: document.getElementById("quartier").value,
+            rue: document.getElementById("destination").value,
+            gerant: document.getElementById("destination").value,
+            telephoneGerant: document.getElementById("phone").value
+        };
+
+        // Envoyer les données au serveur
+        try {
+            const response = await fetch("http://localhost:5000/generate-pdf", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Ajouter l'élément au formList
+                const newItem = document.createElement("div");
+                newItem.classList.add("form-item");
+                newItem.innerHTML = `
+                    <span>${formData.proprietaire}</span>
+                    <span>${formData.nomPDV}</span>
+                    <span><a href="${data.pdfUrl}" target="_blank">Voir PDF</a></span>
+                `;
+                formList.appendChild(newItem);
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+            console.error("Erreur :", error);
+        }
+    });
+});

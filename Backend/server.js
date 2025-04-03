@@ -1,83 +1,56 @@
-require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const PDFDocument = require("pdfkit");
 const fs = require("fs");
-const nodemailer = require("nodemailer");
-const mongoose = require("mongoose");
+const path = require("path");
 
 const app = express();
+const PORT = 5000;
+
+// Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
-// Connexion MongoDB
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log("MongoDB connecté"))
-    .catch(err => console.error(err));
+// Dossier pour stocker les PDF
+const pdfDir = path.join(__dirname, "pdfs");
+if (!fs.existsSync(pdfDir)) {
+    fs.mkdirSync(pdfDir);
+}
 
-// Schéma de stockage des PDFs
-const pdfSchema = new mongoose.Schema({
-    name: String,
-    location: String,
-    status: String,
-    pdfPath: String,
-    createdAt: { type: Date, default: Date.now }
-});
-const PdfModel = mongoose.model("PDF", pdfSchema);
+// Endpoint pour recevoir les données du formulaire et générer un PDF
+app.post("/generate-pdf", (req, res) => {
+    const formData = req.body;
+    const { proprietaire, nomPDV, typePDV, telephone, commune, quartier, rue, gerant, telephoneGerant } = formData;
 
-// 📌 Générer un PDF et stocker en base de données
-app.post("/generate-pdf", async (req, res) => {
-    const { name, location, status } = req.body;
-    const pdfName = `${name}_${Date.now()}.pdf`;
-    const pdfPath = `./pdfs/${pdfName}`;
+    if (!proprietaire || !nomPDV) {
+        return res.status(400).json({ message: "Données incomplètes" });
+    }
 
+    const pdfName = `PDV_${Date.now()}.pdf`;
+    const pdfPath = path.join(pdfDir, pdfName);
     const doc = new PDFDocument();
+
+    // Créer le fichier PDF
     doc.pipe(fs.createWriteStream(pdfPath));
-    doc.fontSize(20).text(`Nom: ${name}`, { align: "center" });
-    doc.moveDown();
-    doc.fontSize(16).text(`Lieu: ${location}`, { align: "center" });
-    doc.moveDown();
-    doc.fontSize(16).text(`Statut: ${status}`, { align: "center" });
+    doc.fontSize(16).text("Fiche du Point de Vente", { align: "center" }).moveDown();
+    doc.fontSize(12).text(`Nom du Propriétaire : ${proprietaire}`);
+    doc.text(`Nom du PDV : ${nomPDV}`);
+    doc.text(`Type de PDV : ${typePDV}`);
+    doc.text(`Téléphone : ${telephone}`);
+    doc.text(`Adresse : ${commune}, ${quartier}, ${rue}`);
+    doc.text(`Gérant : ${gerant}`);
+    doc.text(`Téléphone Gérant : ${telephoneGerant}`);
     doc.end();
 
-    const pdfRecord = new PdfModel({ name, location, status, pdfPath });
-    await pdfRecord.save();
-
-    res.json({ pdfUrl: `http://localhost:3000/pdfs/${pdfName}` });
+    // Répondre avec l'URL du PDF
+    res.json({ pdfUrl: `http://localhost:${PORT}/pdfs/${pdfName}` });
 });
 
-// 📌 Récupérer la liste des PDFs enregistrés
-app.get("/pdfs", async (req, res) => {
-    const pdfs = await PdfModel.find().sort({ createdAt: -1 });
-    res.json(pdfs);
+// Servir les fichiers PDF
+app.use("/pdfs", express.static(pdfDir));
+
+// Démarrer le serveur
+app.listen(PORT, () => {
+    console.log(`Serveur lancé sur http://localhost:${PORT}`);
 });
-
-app.use("/pdfs", express.static("pdfs"));
-
-// 📌 Envoi de PDF par email
-app.post("/send-email", async (req, res) => {
-    const { email, pdfPath } = req.body;
-
-    let transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
-    });
-
-    let mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: email,
-        subject: "Votre fichier PDF",
-        text: "Voici votre fichier PDF.",
-        attachments: [{ filename: pdfPath.split("/").pop(), path: pdfPath }]
-    };
-
-    try {
-        await transporter.sendMail(mailOptions);
-        res.json({ message: "E-mail envoyé avec succès !" });
-    } catch (error) {
-        res.status(500).json({ error: "Erreur d'envoi d'e-mail" });
-    }
-});
-
-app.listen(3000, () => console.log("Serveur sur http://localhost:3000"));
