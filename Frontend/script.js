@@ -81,14 +81,28 @@ linkDivToPage('emballage', '/Frontend/pages/emballage.html');
 
 
 
+
+//DARK MODE STOCK
+document.addEventListener("DOMContentLoaded", function () {
+    let savedTheme = localStorage.getItem("theme"); 
+
+    // console.log("Thème récupéré :", savedTheme); // Vérifie si le thème est bien stocké
+
+    if (savedTheme === "dark") {
+        document.body.classList.add("dark-mode"); 
+        // console.log("Dark mode appliqué !");
+    }
+});
+
+// Fonction pour basculer entre Light et Dark Mode
 function toggleTheme() {
-    document.body.classList.toggle("dark-mode");
+    let body = document.body;
+    let isDark = body.classList.toggle("dark-mode");
+
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+
+    // console.log("Thème sauvegardé :", localStorage.getItem("theme")); // Vérifie si ça s'enregistre bien
 }
-
-
-
-
-
 
 
 
