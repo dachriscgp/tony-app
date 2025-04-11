@@ -20,3 +20,8 @@
     "puppeteer": "^24.6.1"
   }
 }
+
+"main": "server.js",
+"scripts": {
+  "start": "node server.js"
+}
