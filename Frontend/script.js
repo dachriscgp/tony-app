@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Envoi au backend pour PDF + email
             try {
-                const response = await fetch("http://localhost:3000/submit-form", {
+                const response = await fetch("https://tony-app.onrender.com/api/submit-form", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(formData)
