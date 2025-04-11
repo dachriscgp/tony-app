@@ -35,7 +35,12 @@ const transporter = nodemailer.createTransport({
 
 // Fonction pour générer un PDF
 async function generatePDF(html, filePath) {
-  const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox"] });
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined
+  });
+
   const page = await browser.newPage();
   await page.setContent(html, { waitUntil: "networkidle0" });
   await page.pdf({ path: filePath, format: "A4", printBackground: true });
