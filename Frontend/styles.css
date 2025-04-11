@@ -294,26 +294,34 @@ button:hover {
     font-family: Poppins, sans-serif;
 } */
 
-select#quartier {
+select#province {
     background-color: rgb(241, 241, 241);
     color: var(--color-black);
 }
 
 
-.commune {
+.inline {
     width: 10%;
     display: flex;
     align-items: baseline;
     gap: 0.4rem;
 }
 
-.commune label {
+.inline label {
     display: flex;
     width: 40%;
 }
 
 
+#autreTexte {
+    margin-left: 2rem;
+    width: 100rem;
+}
 
+
+.affichage {
+    margin-top: 6rem;
+}
 
 
 
@@ -386,7 +394,7 @@ select#quartier {
 }
 
 .dark-mode input,
-.dark-mode select#quartier  {
+.dark-mode select#province  {
     background-color: rgb(36, 30, 43);
     color: var(--color-white);
     border: 0.5px solid rgb(139, 42, 168);

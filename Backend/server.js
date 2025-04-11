@@ -1,56 +1,89 @@
 const express = require("express");
 const cors = require("cors");
+const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
-const PDFDocument = require("pdfkit");
-const fs = require("fs");
+const ejs = require("ejs");
 const path = require("path");
+const puppeteer = require("puppeteer");
+const nodemailer = require("nodemailer");
+const fs = require("fs");
+
+dotenv.config();
 
 const app = express();
-const PORT = 5000;
-
-// Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
-// Dossier pour stocker les PDF
+// Création du dossier ./pdfs s’il n’existe pas
 const pdfDir = path.join(__dirname, "pdfs");
 if (!fs.existsSync(pdfDir)) {
-    fs.mkdirSync(pdfDir);
+  fs.mkdirSync(pdfDir);
 }
 
-// Endpoint pour recevoir les données du formulaire et générer un PDF
-app.post("/generate-pdf", (req, res) => {
-    const formData = req.body;
-    const { proprietaire, nomPDV, typePDV, telephone, commune, quartier, rue, gerant, telephoneGerant } = formData;
+// Configuration du moteur de template EJS
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
 
-    if (!proprietaire || !nomPDV) {
-        return res.status(400).json({ message: "Données incomplètes" });
-    }
-
-    const pdfName = `PDV_${Date.now()}.pdf`;
-    const pdfPath = path.join(pdfDir, pdfName);
-    const doc = new PDFDocument();
-
-    // Créer le fichier PDF
-    doc.pipe(fs.createWriteStream(pdfPath));
-    doc.fontSize(16).text("Fiche du Point de Vente", { align: "center" }).moveDown();
-    doc.fontSize(12).text(`Nom du Propriétaire : ${proprietaire}`);
-    doc.text(`Nom du PDV : ${nomPDV}`);
-    doc.text(`Type de PDV : ${typePDV}`);
-    doc.text(`Téléphone : ${telephone}`);
-    doc.text(`Adresse : ${commune}, ${quartier}, ${rue}`);
-    doc.text(`Gérant : ${gerant}`);
-    doc.text(`Téléphone Gérant : ${telephoneGerant}`);
-    doc.end();
-
-    // Répondre avec l'URL du PDF
-    res.json({ pdfUrl: `http://localhost:${PORT}/pdfs/${pdfName}` });
+// Configuration de Nodemailer
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "mailtonyapp@gmail.com",
+    pass: process.env.MAIL_PASS, // Assure-toi que .env contient MAIL_PASS
+  }
 });
 
-// Servir les fichiers PDF
-app.use("/pdfs", express.static(pdfDir));
+// Fonction pour générer un PDF
+async function generatePDF(html, filePath) {
+  const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox"] });
+  const page = await browser.newPage();
+  await page.setContent(html, { waitUntil: "networkidle0" });
+  await page.pdf({ path: filePath, format: "A4", printBackground: true });
+  await browser.close();
+}
 
-// Démarrer le serveur
+// Route pour soumettre le formulaire (depuis /negociations.html)
+app.post("/submit-form", async (req, res) => {
+  try {
+    const formData = req.body;
+    const html = await ejs.renderFile("views/template-pdf.ejs", { data: formData });
+    const pdfPath = path.join(pdfDir, `${formData.nom || "formulaire"}.pdf`);
+
+    await generatePDF(html, pdfPath);
+
+    res.json({ message: "Formulaire enregistré, prêt à l'envoi." });
+  } catch (error) {
+    console.error("Erreur lors de la génération :", error);
+    res.status(500).json({ message: "Erreur serveur : " + error.message });
+  }
+});
+
+// Route pour envoyer le PDF par email (depuis /apercu.html)
+app.post("/api/send-pdf", async (req, res) => {
+  try {
+    const formData = req.body;
+    const html = await ejs.renderFile("views/template-pdf.ejs", { data: formData });
+    const pdfPath = path.join(pdfDir, `${formData.nom || "formulaire"}.pdf`);
+
+    await generatePDF(html, pdfPath);
+
+    await transporter.sendMail({
+      from: '"TONY APP" <mailtonyapp@gmail.com>',
+      to: "mailtonyapp@gmail.com",
+      subject: "Formulaire client soumis",
+      text: "Veuillez trouver ci-joint le formulaire rempli.",
+      attachments: [{ filename: "formulaire.pdf", path: pdfPath }],
+    });
+
+    res.json({ message: "PDF envoyé par email avec succès." });
+  } catch (error) {
+    console.error("Erreur d'envoi d'email :", error);
+    res.status(500).json({ message: "Échec de l'envoi : " + error.message });
+  }
+});
+
+// Démarrage du serveur
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Serveur lancé sur http://localhost:${PORT}`);
+  console.log(`✅ Serveur backend démarré sur http://localhost:${PORT}`);
 });

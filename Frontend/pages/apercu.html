@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aperçu des données</title>
+  <link rel="stylesheet" href="/Frontend/fonts-6/css/all.css">
+  <link rel="stylesheet" href="/Frontend/styles.css">
+</head>
+<body>
+  <nav>
+    <div class="bar-nav">
+      <i class="fa-solid fa-chevron-left" onclick="window.history.back()"></i>
+      <h3>APERCU</h3>
+      <i class="fa-solid fa-link"></i>
+      <i class="fa-solid fa-user-plus"></i>
+      <i class="fa-solid fa-sun" onclick="toggleTheme()"></i>
+      <div class="menu-list">
+        <i class="fa-solid fa-ellipsis-vertical profil-view"></i>
+        <div class="list-menu hidden">
+          <a href="#">Link</a>
+          <a href="#">Embed</a>
+          <a href="#">À propos</a>
+          <a href="/Frontend/index.html">Restaurer</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container affichage">
+    <h1>Aperçu des informations soumises</h1>
+    
+    <div id="preview-container"></div>
+
+    <div class="btn-primary">
+      <button onclick="envoyerPDF()">📤 Envoyer par Email</button>
+    </div>
+  </div>
+
+  <script src="/Frontend/script.js"></script>
+  <script>
+    // Récupération des données du localStorage
+    const formData = JSON.parse(localStorage.getItem("formData") || "{}");
+    const previewContainer = document.getElementById("preview-container");
+
+    // Génération dynamique de l’aperçu
+    Object.entries(formData).forEach(([key, value]) => {
+      const group = document.createElement("div");
+      group.className = "form-group";
+
+      const label = document.createElement("label");
+      label.textContent = key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, " ") + " :";
+
+      const p = document.createElement("p");
+      p.textContent = value || "Non renseigné";
+
+      group.appendChild(label);
+      group.appendChild(p);
+      previewContainer.appendChild(group);
+    });
+
+    // Fonction pour envoyer le PDF par email
+    function envoyerPDF() {
+      fetch("http://localhost:3000/api/send-pdf", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(res => {
+        if (!res.ok) throw new Error("Erreur lors de l'envoi.");
+        return res.json();
+      })
+      .then(data => {
+        alert("📩 PDF envoyé avec succès à ton adresse email !");
+      })
+      .catch(err => {
+        console.error("Erreur :", err);
+        alert("❌ Échec de l'envoi. Vérifie que le serveur est démarré.");
+      });
+    }
+  </script>
+</body>
+</html>

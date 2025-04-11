@@ -1,65 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tony Client Portfolio - Parc d'emballage</title>
-    <link rel="stylesheet" href="/Frontend/fonts-6/css/all.css">
-    <link rel="stylesheet" href="/Frontend/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tony Client Portfolio - Emballage</title>
+  <link rel="stylesheet" href="/Frontend/fonts-6/css/all.css">
+  <link rel="stylesheet" href="/Frontend/styles.css">
 </head>
 
 <body>
-    <nav>
-        <div class="bar-nav">
-            <i class="fa-solid fa-chevron-left"></i>
-            <h3>
-                PARC D'EMBALLAGE
-            </h3>
-            <i class="fa-solid fa-link"></i>
-            <i class="fa-solid fa-user-plus"></i>
-            <i class="fa-solid fa-sun" onclick="toggleTheme()"></i>
-            <div class="menu-list">
-                <i class="fa-solid fa-ellipsis-vertical profil-view"></i>
-                <div class="list-menu hidden">
-                    <a href="">Link</a>
-                    <a href="">Embed</a>
-                    <a href="">à propos</a>
-                    <a href="">Restaurer</a>
-                </div>
-            </div>
+  <nav>
+    <div class="bar-nav">
+      <i class="fa-solid fa-chevron-left"></i>
+      <h3>PARC D'EMBALLAGE</h3>
+      <i class="fa-solid fa-link"></i>
+      <i class="fa-solid fa-user-plus"></i>
+      <i class="fa-solid fa-sun" onclick="toggleTheme()"></i>
+      <div class="menu-list">
+        <i class="fa-solid fa-ellipsis-vertical profil-view"></i>
+        <div class="list-menu hidden">
+          <a href="#">Link</a>
+          <a href="#">Embed</a>
+          <a href="#">À propos</a>
+          <a href="/Frontend/index.html">Restaurer</a>
         </div>
-    </nav>
+      </div>
+    </div>
+  </nav>
 
-
-    <main>
-        <div class="container">
-
-            <form id="form-id">
-                <div class="form-group">
-                    <label for="pickup">REMPLACER :</label>
-                    <input type="text" id="pickup" placeholder="Votre réponse" required>
-                </div>
-                <div class="form-group">
-                    <label for="destination">REMPLACER :</label>
-                    <input type="text" id="destination" placeholder="Votre réponse" required>
-                </div>
-
-                <button type="submit" class="btn-primary" onclick="console.log('none')">Suivant</button>
-            </form>
-
+  <main>
+    <div class="container">
+      <form id="form-id">
+        
+        <div class="form-group">
+          <label for="Brasimba">PARC D'EMBALLAGES BRASIMBA :</label>
+          <input type="text" id="Brasimba" name="brasimba" placeholder="Par format" required>
         </div>
-    </main>
 
+        <div class="form-group">
+          <label for="Bralima">PARC D'EMBALLAGES BRALIMA :</label>
+          <input type="text" id="Bralima" name="Bralima" placeholder="Par format" required>
+        </div>
 
-    <footer class="app-footer">
-        <p>
-            copyright © 2025 TONY CLIENT PORTOFOLIO
-        </p>
-    </footer>
+        <button id="nextButton" type="button" class="btn-primary">Suivant</button>
+      </form>
+    </div>
+  </main>
 
+  <footer class="app-footer">
+    <p>Copyright © 2025 TONY CLIENT PORTFOLIO</p>
+  </footer>
 
-    <script src="/script.js"></script>
+  <script src="/Frontend/script.js"></script>
+  <script>
+    document.getElementById("nextButton").addEventListener("click", function () {
+      let formData = JSON.parse(localStorage.getItem("formData")) || {};
+
+      let pageData = {};
+      document.querySelectorAll("input, select, textarea").forEach(input => {
+        if (input.type === "checkbox") {
+          pageData[input.name] = input.checked;
+        } else {
+          pageData[input.name] = input.value;
+        }
+      });
+
+      Object.assign(formData, pageData);
+      localStorage.setItem("formData", JSON.stringify(formData));
+
+      window.location.href = "/Frontend/pages/decoration.html"; // Page suivante
+    });
+  </script>
 </body>
 
 </html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #2300bd;
+      font-size: 1rem;
+    }
+    .section {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    .section h2 {
+      margin-top: 0;
+      font-size: 18px;
+      color: #5916af;
+    }
+    .section p {
+      margin: 5px 0;
+    }
+    .label {
+      font-weight: bold;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Résumé du Formulaire Client</h1>
+
+  <div class="section">
+    <h2>Informations Générales</h2>
+    <p><span class="label">Fornisseur :</span> <%= data.nom || "Tony K." %></p>
+    <p><span class="label">Localisation :</span> <%= data.localisation || "Non renseigné" %></p>
+    <p><span class="label">Statut :</span> <%= data.statut || "CEO" %></p>
+  </div>
+
+  <div class="section">
+    <h2>Présentation</h2>
+    <p><span class="label">Point de Vente :</span> <%= data.Point_de_vente || "Non renseigné" %></p>
+    <p><span class="label">Type de point de vente :</span> <%= data.categories || "Non renseigné" %></p>
+    <p><span class="label">Nom du Propriétaire :</span> <%= data.owner_name || "Non renseigné" %></p>
+    <p><span class="label">Téléphone :</span> <%= data.owner_phone || "Non renseigné" %></p>
+    <p><span class="label">Province :</span> <%= data.province || "Non renseigné" %></p>
+    <p><span class="label">Ville :</span> <%= data.ville || "Non renseigné" %></p>
+    <p><span class="label">Réference :</span> <%= data.reference || "Non renseigné" %></p>
+    <p><span class="label">Nom du Gérant :</span> <%= data.nom_du_gerant || "Non renseigné" %></p>
+    <p><span class="label">Téléphone :</span> <%= data.manager_phone || "Non renseigné" %></p>
+  </div>
+
+  <div class="section">
+    <h2>Distribution</h2>
+    <p><span class="label">Type de client :</span> <%= data.Type_Client || "Non renseigné" %></p>
+    <p><span class="label">Grossiste :</span> <%= data.nom_grossiste || "Non renseigné" %></p>
+    <p><span class="label">Réalisation Bralima :</span> <%= data.realisation || "Non renseigné" %></p>
+    <p><span class="label">Réalisations du mois cochés :</span> <%= data.realisation_du_mois || "Non renseigné" %></p>
+    <p><span class="label">Prix Brasimba par format :</span> <%= data.prix || "Non renseigné" %></p>
+  </div>
+
+  <div class="section">
+    <h2>Emballage</h2>
+    <p><span class="label">Parc d'emballages Brasimba :</span> <%= data.brasimba || "Non renseigné" %></p>
+    <p><span class="label">Parc d'emballages Bralima :</span> <%= data.bralima || "Non renseigné" %></p>
+  </div>
+
+  <div class="section">
+    <h2>Décoration</h2>
+    <p><span class="label">Décoration :</span> <%= data.decoration || "Non renseigné" %></p>
+  </div>
+
+  <div class="section">
+    <h2>Besoins</h2>
+    <p><span class="label">Besoins Matériels :</span> <%= data.besoins_materiels || "Non renseigné" %></p>
+  </div>
+
+  <div class="section">
+    <h2>Négociations</h2>
+    <p><span class="label">Demande de consignation :</span> <%= data.demande || "Non renseigné" %></p>
+    <p><span class="label">Infos concurrents :</span> <%= data.infos_concurrents || "Non renseigné" %></p>
+    <p><span class="label">Avis & Commentaires :</span> <%= data.commentaires || "Non renseigné" %></p>
+  </div>
+
+</body>
+
+</html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -13,90 +13,139 @@
     <nav>
         <div class="bar-nav">
             <i class="fa-solid fa-chevron-left"></i>
-            <h3>
-                PRESENTATION
-            </h3>
+            <h3>PRESENTATION</h3>
             <i class="fa-solid fa-link"></i>
             <i class="fa-solid fa-user-plus"></i>
             <i class="fa-solid fa-sun" onclick="toggleTheme()"></i>
             <div class="menu-list">
                 <i class="fa-solid fa-ellipsis-vertical profil-view"></i>
                 <div class="list-menu hidden">
-                    <a href="">Link</a>
-                    <a href="">Embed</a>
-                    <a href="">à propos</a>
-                    <a href="">Restaurer</a>
+                    <a href="#">Link</a>
+                    <a href="#">Embed</a>
+                    <a href="#">À propos</a>
+                    <a href="/Frontend/index.html">Restaurer</a>
                 </div>
             </div>
         </div>
     </nav>
 
-
     <main>
         <div class="container">
-
             <form id="form-id">
                 <div class="form-group">
-                    <label for="pickup">Nom PDV :</label>
-                    <input type="text" id="pickup" placeholder="Nom de Point de vente" required>
+                    <label for="Point_de_vente">Nom PDV :</label>
+                    <input type="text" id="Point_de_vente" name="Point_de_vente" placeholder="Nom de Point de vente" required>
                 </div>
                 <div class="form-group">
                     <label for="categories">Type de point de vente :</label>
-                    <input type="text" id="categories" placeholder="Resto, Bar, Caferesto, Discothèque, Hotel, Alimentation..." required>
+                    <input type="text" id="categories" name="categories" placeholder="Resto, Bar, Caféresto..."
+                        required>
                 </div>
                 <div class="form-group">
-                    <label for="destination">NOM COMPLET (Propriétaire)</label>
-                    <input type="text" id="destination" placeholder="ex. John Dupont" required>
+                    <label for="owner_name">NOM COMPLET (Propriétaire)</label>
+                    <input type="text" id="owner_name" name="owner_name" placeholder="ex. John Dupont" required>
                 </div>
                 <div class="form-group">
-                    <label for="phone">TELEPHONE (Propriétaire) :</label>
-                    <input type="tel" id="phone" name="phone" placeholder="+243 999 000 000" pattern="^\+?\d{1,3}[-.\s]?\d{1,14}$" required>
+                    <label for="owner_phone">TÉLÉPHONE (Propriétaire) :</label>
+                    <input type="tel" id="owner_phone" name="owner_phone" placeholder="+243 999 000 000"
+                        pattern="^\+?\d{1,3}[-.\s]?\d{1,14}$" required>
                 </div>
                 <div class="form-group">
-                    <label for="quartier">Adresses</label>
-                    <div class="commune">
+                    <label for="province">Adresses :</label>
+                    <select name="province" id="province" required>
+                        <option value="">-- Sélectionnez votre Province --</option>
+                        <option value="Nord-Kivu">Nord-Kivu</option>
+                        <option value="Sud-Kivu">Sud-Kivu</option>
+                        <option value="Equateur">Equateur</option>
+                        <option value="Tanganyika">Tanganyika</option>
+                        <option value="Haut-Uele">Haut-Uele</option>
+                        <option value="Bas-Uele">Bas-Uele</option>
+                        <option value="Haut-Katanga">Haut-Katanga</option>
+                        <option value="Haut-Lomami">Haut-Lomami</option>
+                        <option value="Kasai">Kasai</option>
+                        <option value="Kasai-Oriental">Kasai Oriental</option>
+                        <option value="Kasai-Central">Kasai Central</option>
+                        <option value="Kinshasa">Kinshasa</option>
+                        <option value="Kongo-Central">Kongo-Central</option>
+                        <option value="Kwango">Kwango</option>
+                        <option value="Kwilu">Kwilu</option>
+                        <option value="Lomami">Lomami</option>
+                        <option value="Maniema">Maniema</option>
+                        <option value="Mongala">Mongala</option>
+                        <option value="Nord-Ubangi">Nord-Ubangi</option>
+                        <option value="Sud-Ubangi">Sud-Ubangi</option>
+                        <option value="Sankuru">Sankuru</option>
+                        <option value="Ituri">Ituri</option>
+                        <option value="Tshuapa">Tshuapa</option>
+                        <option value="Lualaba">Lualaba</option>
+                        <option value="Mai-Ndombe">Mai-Ndombe</option>
+                        <option value="Tshopo">Tshopo</option>
+                    </select>
+
+                    <!-- CECI SERA COMPLETER APRES -->
+                    <!-- <div class="inline">
                         <input type="radio" id="goma" name="commune" value="Goma" required>
                         <label for="goma">Commune de Goma</label>
                     </div>
-                    <div class="commune">
+                    <div class="inline">
                         <input type="radio" id="karisimbi" name="commune" value="Karisimbi" required>
                         <label for="karisimbi">Commune de Karisimbi</label>
-                    </div>
-                    <select name="quartier" id="quartier" required>
-                        <option value="">-- Selectionnez votre Quartier --</option>
-                        <option value="Mabanga-Nord">Mabanga-Nord</option>
-                        <option value="Mabanga-Sud">Mabanga-Sud</option>
-                        <option value="Himbi">Himbi</option>
-                    </select>
+                    </div> -->
+
+                    <label for="ville"></label>
+                    <input type="text" id="ville" name="ville" placeholder="Ville" required>
+
                     <label for="reference"></label>
-                    <input type="text" id="destination" placeholder="Rue, Numero d'avenue" required>
+                    <input type="text" id="reference" name="reference" placeholder="Quartier, Rue, Numéro d'avenue" required>
                 </div>
                 <div class="form-group">
-                    <label for="destination">NOM COMPLET (Gérant) :</label>
-                    <input type="text" id="destination" placeholder="ex. John Dupond" required>
+                    <label for="nom_du_gerant">NOM COMPLET (Gérant) :</label>
+                    <input type="text" id="nom_du_gerant" name="nom_du_gerant" placeholder="ex. John Dupond" required>
                 </div>
                 <div class="form-group">
-                    <label for="phone">TELEPHONE (Gérant) :</label>
-                    <input type="tel" id="phone" name="phone" placeholder="+243 999 000 000" pattern="^\+?\d{1,3}[-.\s]?\d{1,14}$" required>
+                    <label for="manager_phone">TÉLÉPHONE (Gérant) :</label>
+                    <input type="tel" id="manager_phone" name="manager_phone" placeholder="+243 999 000 000"
+                        pattern="^\+?\d{1,3}[-.\s]?\d{1,14}$" required>
                 </div>
-                
-                <button type="submit" class="btn-primary">Suivant</button>
+
+                <button id="nextButton" type="button" class="btn-primary" data-next="distribution.html">Suivant</button>
             </form>
-
-
-
         </div>
     </main>
 
-
     <footer class="app-footer">
-        <p>
-            copyright © 2025 TONY CLIENT PORTOFOLIO
-        </p>
+        <p>copyright © 2025 TONY CLIENT PORTOFOLIO</p>
     </footer>
 
 
-    <script src="/Frontend/script.js"></script>
+
+
+
+
+    <script src="/Frontend/script.js">
+
+        
+        document.getElementById("nextButton").addEventListener("click", function () {
+    let formData = JSON.parse(localStorage.getItem("formData")) || {};
+
+    let pageData = {};
+    document.querySelectorAll("input, select, textarea").forEach(input => {
+        if (input.type === "checkbox") {
+            pageData[input.name] = input.checked;
+        } else {
+            pageData[input.name] = input.value;
+        }
+    });
+
+    Object.assign(formData, pageData);
+    localStorage.setItem("formData", JSON.stringify(formData));
+
+    window.location.href = "/Frontend/pages/distribution.html"; // Remplace avec la page suivante
+});
+
+
+
+    </script>
 </body>
 
 </html>

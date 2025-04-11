@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -13,53 +13,265 @@
     <nav>
         <div class="bar-nav">
             <i class="fa-solid fa-chevron-left"></i>
-            <h3>
-                DISTRIBUTION
-            </h3>
+            <h3>DISTRIBUTION</h3>
             <i class="fa-solid fa-link"></i>
             <i class="fa-solid fa-user-plus"></i>
             <i class="fa-solid fa-sun" onclick="toggleTheme()"></i>
             <div class="menu-list">
                 <i class="fa-solid fa-ellipsis-vertical profil-view"></i>
                 <div class="list-menu hidden">
-                    <a href="">Link</a>
-                    <a href="">Embed</a>
-                    <a href="">à propos</a>
-                    <a href="">Restaurer</a>
+                    <a href="#">Link</a>
+                    <a href="#">Embed</a>
+                    <a href="#">À propos</a>
+                    <a href="/Frontend/index.html">Restaurer</a>
                 </div>
             </div>
         </div>
     </nav>
 
-
     <main>
         <div class="container">
-
             <form id="form-id">
                 <div class="form-group">
-                    <label for="pickup">REMPLACER :</label>
-                    <input type="text" id="pickup" placeholder="Votre réponse" required>
+                    <label>Type de client :</label>
+                    <div class="inline">
+                        <input type="checkbox" id="kd" name="Type_Client" value="K-D">
+                        <label for="kd">K-D</label>
+                    </div>
+
+                    <div class="inline">
+                        <input type="checkbox" id="kkv" name="Type_Client" value="K.K.V">
+                        <label for="kkv">K.K.V</label>
+                    </div>
+
+                    <div class="inline">
+                        <input type="checkbox" id="grossiste" name="Type_Client" value="Grossiste">
+                        <label for="grossiste">Grossiste</label>
+                    </div>
+
+                    <div class="inline">
+                        <input type="checkbox" id="autre" name="Type_Client" value="Autre">
+                        <label for="autre">Autre :</label>
+                        <input type="text" id="autreTexte" name="autreTexte" placeholder="Précisez..." required>
+                    </div>
                 </div>
+
                 <div class="form-group">
-                    <label for="destination">REMPLACER :</label>
-                    <input type="text" id="destination" placeholder="Votre réponse" required>
+                    <div class="form-group">
+                        <label for="nom_grossiste">GROSSISTE :</label>
+                        <input type="text" id="nom_grossiste" name="nom_grossiste" placeholder="Si Oui, Votre nom">
+                    </div>
                 </div>
 
-                <button type="submit" class="btn-primary">Suivant</button>
-            </form>
+                <div class="form-group">
+                    <label for="Bralima">REALISATION BRALIMA</label>
+                    <div class="inline">
+                        <input type="checkbox" id="janvier" name="realisation" value="Janvier">
+                        <label for="Janvier">Janvier</label>
+                    </div>
 
+                    <div class="inline">
+                        <input type="checkbox" id="fevrier" name="realisation" value="Fevrier">
+                        <label for="Fevrier">Février</label>
+                    </div>
+
+                    <div class="inline">
+                        <input type="checkbox" id="mars" name="realisation" value="Mars">
+                        <label for="Mars">Mars</label>
+                    </div>
+
+                    <div class="inline">
+                        <input type="checkbox" id="avril" name="realisation" value="Avril">
+                        <label for="Avril">Avril</label>
+                    </div>
+
+                    <div class="inline">
+                        <input type="checkbox" id="mai" name="realisation" value="Mai">
+                        <label for="Janvier">Mai</label>
+                    </div>
+
+                    <div class="inline">
+                        <input type="checkbox" id="juin" name="realisation" value="Juin">
+                        <label for="Janvier">Juin</label>
+                    </div>
+
+                    <div class="inline">
+                        <input type="checkbox" id="juillet" name="realisation" value="Juillet">
+                        <label for="Janvier">Juillet</label>
+                    </div>
+
+                    <div class="inline">
+                        <input type="checkbox" id="Aout" name="realisation" value="aout">
+                        <label for="Aout">Août</label>
+                    </div>
+                    
+                    <div class="inline">
+                        <input type="checkbox" id="septembre" name="realisation" value="Septembre">
+                        <label for="Septembre">Septembre</label>
+                    </div>
+
+                    <div class="inline">
+                        <input type="checkbox" id="octobre" name="realisation" value="Octobre">
+                        <label for="Octobre">Octobre</label>
+                    </div>
+
+                    <div class="inline">
+                        <input type="checkbox" id="novembre" name="realisation" value="Novembre">
+                        <label for="Novembre">Novembre</label>
+                    </div>
+
+                    <div class="inline">
+                        <input type="checkbox" id="decembre" name="realisation" value="Decembre">
+                        <label for="Decembre">Decembre</label>
+                    </div>                    
+                </div>
+
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="realisation_du_mois">REALISATIONS DE MOIS COCHES :</label>
+                        <input type="text" id="realisation_du_mois" name="realisation_du_mois" placeholder="Ex: 200, 300, 50 si pour 3 mois en ordre croissant" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="Brasimba">PRIX BRASIMBA PAR FORMAT :</label>
+                        <input type="text" id="prix" name="prix" placeholder="Prix par format" required>
+                    </div>
+                </div>
+
+                <button id="nextButton" type="button" class="btn-primary"
+                    data-next="/Frontend/pages/emballage.html">Suivant</button>
+            </form>
         </div>
     </main>
 
-
     <footer class="app-footer">
-        <p>
-            copyright © 2025 TONY CLIENT PORTOFOLIO
-        </p>
+        <p>copyright © 2025 TONY CLIENT PORTOFOLIO</p>
     </footer>
 
 
-    <script src="/Frontend/script.js"></script>
+
+
+
+
+    <script src="/Frontend/script.js">
+
+
+
+        document.getElementById("autre").addEventListener("change", function () {
+            const autreTexte = document.getElementById("autreTexte");
+            autreTexte.disabled = !this.checked;
+            if (!this.checked) {
+                autreTexte.value = "";
+            }
+        });
+
+        // Fonction de sauvegarde
+        function sauvegarderTypeClient() {
+            const types = [];
+
+            if (document.getElementById("kd").checked) types.push("K-D");
+            if (document.getElementById("kkv").checked) types.push("K.K.V");
+            if (document.getElementById("grossiste").checked) types.push("Grossiste");
+
+            const autreCheck = document.getElementById("autre");
+            const autreTexte = document.getElementById("autreTexte").value;
+
+            if (autreCheck.checked && autreTexte.trim() !== "") {
+                types.push("Autre: " + autreTexte.trim());
+            }
+
+            // Sauvegarder dans localStorage
+            localStorage.setItem("typeClient", JSON.stringify(types));
+        }
+
+
+
+
+
+        document.getElementById("nextButton").addEventListener("click", function (e) {
+            e.preventDefault();
+            sauvegarderTypeClient();
+            window.location.href = "/Frontend/pages/emballage.html"; // ou autre
+        });
+
+
+
+
+
+        document.getElementById("nextButton").addEventListener("click", function () {
+            let formData = JSON.parse(localStorage.getItem("formData")) || {};
+
+            let pageData = {};
+            document.querySelectorAll("input, select, textarea").forEach(input => {
+                if (input.type === "checkbox") {
+                    pageData[input.name] = input.checked;
+                } else {
+                    pageData[input.name] = input.value;
+                }
+            });
+
+            Object.assign(formData, pageData);
+            localStorage.setItem("formData", JSON.stringify(formData));
+
+            window.location.href = "/Frontend/pages/emballage.html"; // Remplace avec la page suivante
+        });
+
+
+
+    </script>
+
+<script>
+    document.getElementById("autre").addEventListener("change", function () {
+      const autreTexte = document.getElementById("autreTexte");
+      autreTexte.disabled = !this.checked;
+      if (!this.checked) {
+        autreTexte.value = "";
+      }
+    });
+  
+    document.getElementById("nextButton").addEventListener("click", function (e) {
+      e.preventDefault();
+  
+      let formData = JSON.parse(localStorage.getItem("formData")) || {};
+  
+      // --- Sauvegarder les types de clients cochés ---
+      const typeClients = [];
+      if (document.getElementById("kd").checked) typeClients.push("K-D");
+      if (document.getElementById("kkv").checked) typeClients.push("K.K.V");
+      if (document.getElementById("grossiste").checked) typeClients.push("Grossiste");
+  
+      const autreCheck = document.getElementById("autre");
+      const autreTexte = document.getElementById("autreTexte").value;
+      if (autreCheck.checked && autreTexte.trim() !== "") {
+        typeClients.push("Autre: " + autreTexte.trim());
+      }
+      formData["typeClient"] = typeClients;
+  
+      // --- Sauvegarder les réalisations cochées ---
+      const realisations = [];
+      document.querySelectorAll("input[name='realisation']:checked").forEach(el => {
+        realisations.push(el.value);
+      });
+      formData["realisations"] = realisations;
+  
+      // --- Autres champs texte (pickup, prix, etc.) ---
+      const inputs = document.querySelectorAll("input[type='text']");
+      inputs.forEach(input => {
+        if (input.name) {
+          formData[input.name] = input.value;
+        }
+      });
+  
+      // Enregistrement dans localStorage
+      localStorage.setItem("formData", JSON.stringify(formData));
+  
+      // Redirection vers la page suivante
+      window.location.href = "/Frontend/pages/emballage.html";
+    });
+  </script>
+  
 </body>
 
 </html>
