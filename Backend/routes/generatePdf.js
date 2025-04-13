@@ -12,7 +12,7 @@ router.post("/send-pdf", async (req, res) => {
 
     res.status(200).json({ message: "PDF envoyé avec succès" });
   } catch (err) {
-    console.error(err);
+    console.error("Erreur lors de l'envoi :", err);
     res.status(500).json({ error: "Erreur lors de l'envoi du PDF" });
   }
 });
