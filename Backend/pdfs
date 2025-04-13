@@ -1,6 +1,1 @@
-const pdfDir = path.join(__dirname, "pdfs");
 
-// Création du dossier ./pdfs s’il n’existe pas
-if (!fs.existsSync(pdfDir)) {
-  fs.mkdirSync(pdfDir, { recursive: true });  // Assure-toi que tous les dossiers parents sont créés
-}
