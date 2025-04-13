@@ -38,10 +38,12 @@ const transporter = nodemailer.createTransport({
 async function generatePDF(html, filePath) {
   let browser = null;
   try {
+    const executablePath = process.env.CHROME_EXECUTABLE_PATH || await chromium.executablePath;
+    
     browser = await puppeteer.launch({
       args: chromium.args,
-      executablePath: await chromium.executablePath,
-      headless: chromium.headless,
+      executablePath: executablePath || '/usr/bin/chromium-browser',
+      headless: chromium.headless ?? true,
     });
 
     const page = await browser.newPage();
@@ -55,6 +57,7 @@ async function generatePDF(html, filePath) {
     }
   }
 }
+
 
 
 
