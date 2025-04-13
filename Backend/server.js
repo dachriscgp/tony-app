@@ -28,101 +28,103 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+
+
+
+
+
 // Fonction PDFKit stylée
 function generatePDFWithPDFKit(data, filePath) {
   return new Promise((resolve, reject) => {
-    const doc = new PDFDocument({ margin: 40 });
+    const doc = new PDFDocument({ margin: 50 });
     const stream = fs.createWriteStream(filePath);
     doc.pipe(stream);
 
-    // En-tête stylé
+    // Header - Logo + Titre
     doc
       .fillColor("#2300bd")
-      .fontSize(22)
-      .text("Résumé du Formulaire Client", { align: "center" })
-      .moveDown(1);
+      .fontSize(26)
+      .text("🧾 Résumé du Formulaire Client", { align: "center" })
+      .moveDown(2);
 
-    const sections = [
-      {
-        title: "Informations Générales",
-        content: [
-          { label: "Fournisseur", value: data.nom || "Tony K." },
-          { label: "Localisation", value: data.localisation || "Non renseigné" },
-          { label: "Statut", value: data.statut || "CEO" }
-        ]
-      },
-      {
-        title: "Présentation",
-        content: [
-          { label: "Point de Vente", value: data.Point_de_vente || "Non renseigné" },
-          { label: "Type de point de vente", value: data.categories || "Non renseigné" },
-          { label: "Nom du Propriétaire", value: data.owner_name || "Non renseigné" },
-          { label: "Téléphone", value: data.owner_phone || "Non renseigné" },
-          { label: "Province", value: data.province || "Non renseigné" },
-          { label: "Ville", value: data.ville || "Non renseigné" },
-          { label: "Référence", value: data.reference || "Non renseigné" },
-          { label: "Nom du Gérant", value: data.nom_du_gerant || "Non renseigné" },
-          { label: "Téléphone Gérant", value: data.manager_phone || "Non renseigné" }
-        ]
-      },
-      {
-        title: "Distribution",
-        content: [
-          { label: "Type de client", value: data.Type_Client || "Non renseigné" },
-          { label: "Grossiste", value: data.nom_grossiste || "Non renseigné" },
-          { label: "Réalisation Bralima", value: data.realisation || "Non renseigné" },
-          { label: "Réalisations du mois cochés", value: data.realisation_du_mois || "Non renseigné" },
-          { label: "Prix Brasimba par format", value: data.prix || "Non renseigné" }
-        ]
-      },
-      {
-        title: "Emballage",
-        content: [
-          { label: "Parc d'emballages Brasimba", value: data.brasimba || "Non renseigné" },
-          { label: "Parc d'emballages Bralima", value: data.bralima || "Non renseigné" }
-        ]
-      },
-      {
-        title: "Décoration",
-        content: [
-          { label: "Décoration", value: data.decoration || "Non renseigné" }
-        ]
-      },
-      {
-        title: "Besoins",
-        content: [
-          { label: "Besoins Matériels", value: data.besoins_materiels || "Non renseigné" }
-        ]
-      },
-      {
-        title: "Négociations",
-        content: [
-          { label: "Demande de consignation", value: data.demande || "Non renseigné" },
-          { label: "Infos concurrents", value: data.infos_concurrents || "Non renseigné" },
-          { label: "Avis & Commentaires", value: data.commentaires || "Non renseigné" }
-        ]
-      }
-    ];
+    // Fonction pour dessiner un cadre moderne pour chaque section
+    const drawSection = (title, fields) => {
+      doc
+        .fillColor("#ffffff")
+        .rect(doc.x - 10, doc.y - 5, doc.page.width - 100, fields.length * 20 + 40)
+        .fill("#f5f5f5")
+        .stroke();
 
-    sections.forEach(section => {
       doc
         .fillColor("#5916af")
-        .fontSize(16)
-        .text(section.title, { underline: true, align: "left" })
-        .moveDown(0.3);
+        .fontSize(18)
+        .text(title, doc.x + 5, doc.y - fields.length * 20 - 10);
 
-      section.content.forEach(item => {
+      doc.moveDown();
+
+      fields.forEach(item => {
         doc
-          .fillColor("#333")
           .fontSize(12)
-          .text(`${item.label}: `, { continued: true, underline: false, bold: true })
-          .fillColor("#555")
-          .text(item.value)
-          .moveDown(0.1);
+          .fillColor("#333333")
+          .text(`• ${item.label}: `, { continued: true })
+          .fillColor("#555555")
+          .text(item.value);
       });
 
-      doc.moveDown(1);
-    });
+      doc.moveDown(2);
+    };
+
+    // Sections comme "cartes"
+    drawSection("Informations Générales", [
+      { label: "Fournisseur", value: data.nom || "Tony K." },
+      { label: "Localisation", value: data.localisation || "Non renseigné" },
+      { label: "Statut", value: data.statut || "CEO" }
+    ]);
+
+    drawSection("Présentation", [
+      { label: "Point de Vente", value: data.Point_de_vente || "Non renseigné" },
+      { label: "Type de point de vente", value: data.categories || "Non renseigné" },
+      { label: "Nom du Propriétaire", value: data.owner_name || "Non renseigné" },
+      { label: "Téléphone", value: data.owner_phone || "Non renseigné" },
+      { label: "Province", value: data.province || "Non renseigné" },
+      { label: "Ville", value: data.ville || "Non renseigné" },
+      { label: "Référence", value: data.reference || "Non renseigné" },
+      { label: "Nom du Gérant", value: data.nom_du_gerant || "Non renseigné" },
+      { label: "Téléphone Gérant", value: data.manager_phone || "Non renseigné" }
+    ]);
+
+    drawSection("Distribution", [
+      { label: "Type de client", value: data.Type_Client || "Non renseigné" },
+      { label: "Grossiste", value: data.nom_grossiste || "Non renseigné" },
+      { label: "Réalisation Bralima", value: data.realisation || "Non renseigné" },
+      { label: "Réalisations du mois cochés", value: data.realisation_du_mois || "Non renseigné" },
+      { label: "Prix Brasimba par format", value: data.prix || "Non renseigné" }
+    ]);
+
+    drawSection("Emballage", [
+      { label: "Parc d'emballages Brasimba", value: data.brasimba || "Non renseigné" },
+      { label: "Parc d'emballages Bralima", value: data.bralima || "Non renseigné" }
+    ]);
+
+    drawSection("Décoration", [
+      { label: "Décoration", value: data.decoration || "Non renseigné" }
+    ]);
+
+    drawSection("Besoins", [
+      { label: "Besoins Matériels", value: data.besoins_materiels || "Non renseigné" }
+    ]);
+
+    drawSection("Négociations", [
+      { label: "Demande de consignation", value: data.demande || "Non renseigné" },
+      { label: "Infos concurrents", value: data.infos_concurrents || "Non renseigné" },
+      { label: "Avis & Commentaires", value: data.commentaires || "Non renseigné" }
+    ]);
+
+    // Footer
+    doc
+      .fontSize(10)
+      .fillColor("#999")
+      .text("Généré par TonyApp — © " + new Date().getFullYear(), 50, doc.page.height - 50, { align: "center" });
 
     doc.end();
 
@@ -130,6 +132,14 @@ function generatePDFWithPDFKit(data, filePath) {
     stream.on("error", reject);
   });
 }
+
+
+
+
+
+
+
+
 
 // Route pour formulaire
 app.post("/submit-form", async (req, res) => {
