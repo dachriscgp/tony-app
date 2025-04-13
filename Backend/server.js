@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const path = require("path");
 const chromium = require("chrome-aws-lambda");
+const puppeteer = require("puppeteer-core");
 const nodemailer = require("nodemailer");
 const fs = require("fs");
 
