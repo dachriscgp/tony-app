@@ -1,95 +1,95 @@
-<!DOCTYPE html>
-<html lang="fr">
+function generatePDFWithPDFKit(data, filePath) {
+  return new Promise((resolve, reject) => {
+    const doc = new PDFDocument({ margin: 40 });
+    const stream = fs.createWriteStream(filePath);
 
-<head>
-  <meta charset="UTF-8">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      color: #333;
-    }
-    h1 {
-      text-align: center;
-      color: #2300bd;
-      font-size: 1rem;
-    }
-    .section {
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      padding: 15px;
-      border-radius: 10px;
-    }
-    .section h2 {
-      margin-top: 0;
-      font-size: 18px;
-      color: #5916af;
-    }
-    .section p {
-      margin: 5px 0;
-    }
-    .label {
-      font-weight: bold;
-      color: #555;
-    }
-  </style>
-</head>
+    doc.pipe(stream);
 
-<body>
-  <h1>Résumé du Formulaire Client</h1>
+    // Titre principal
+    doc
+      .fontSize(20)
+      .fillColor("#2300bd")
+      .text("Résumé du Formulaire Client", { align: "center" })
+      .moveDown(1);
 
-  <div class="section">
-    <h2>Informations Générales</h2>
-    <p><span class="label">Fornisseur :</span> <%= data.nom || "Tony K." %></p>
-    <p><span class="label">Localisation :</span> <%= data.localisation || "Non renseigné" %></p>
-    <p><span class="label">Statut :</span> <%= data.statut || "CEO" %></p>
-  </div>
+    // Fonction réutilisable pour chaque section
+    const renderSection = (title, contentArray) => {
+      doc
+        .fontSize(16)
+        .fillColor("#5916af")
+        .text(title)
+        .moveDown(0.5);
 
-  <div class="section">
-    <h2>Présentation</h2>
-    <p><span class="label">Point de Vente :</span> <%= data.Point_de_vente || "Non renseigné" %></p>
-    <p><span class="label">Type de point de vente :</span> <%= data.categories || "Non renseigné" %></p>
-    <p><span class="label">Nom du Propriétaire :</span> <%= data.owner_name || "Non renseigné" %></p>
-    <p><span class="label">Téléphone :</span> <%= data.owner_phone || "Non renseigné" %></p>
-    <p><span class="label">Province :</span> <%= data.province || "Non renseigné" %></p>
-    <p><span class="label">Ville :</span> <%= data.ville || "Non renseigné" %></p>
-    <p><span class="label">Réference :</span> <%= data.reference || "Non renseigné" %></p>
-    <p><span class="label">Nom du Gérant :</span> <%= data.nom_du_gerant || "Non renseigné" %></p>
-    <p><span class="label">Téléphone :</span> <%= data.manager_phone || "Non renseigné" %></p>
-  </div>
+      contentArray.forEach(({ label, value }) => {
+        doc
+          .fontSize(12)
+          .fillColor("#555")
+          .font("Helvetica-Bold")
+          .text(`${label}: `, { continued: true })
+          .font("Helvetica")
+          .fillColor("#000")
+          .text(value || "Non renseigné");
+      });
 
-  <div class="section">
-    <h2>Distribution</h2>
-    <p><span class="label">Type de client :</span> <%= data.Type_Client || "Non renseigné" %></p>
-    <p><span class="label">Grossiste :</span> <%= data.nom_grossiste || "Non renseigné" %></p>
-    <p><span class="label">Réalisation Bralima :</span> <%= data.realisation || "Non renseigné" %></p>
-    <p><span class="label">Réalisations du mois cochés :</span> <%= data.realisation_du_mois || "Non renseigné" %></p>
-    <p><span class="label">Prix Brasimba par format :</span> <%= data.prix || "Non renseigné" %></p>
-  </div>
+      doc.moveDown(1);
+    };
 
-  <div class="section">
-    <h2>Emballage</h2>
-    <p><span class="label">Parc d'emballages Brasimba :</span> <%= data.brasimba || "Non renseigné" %></p>
-    <p><span class="label">Parc d'emballages Bralima :</span> <%= data.bralima || "Non renseigné" %></p>
-  </div>
+    // Sections équivalentes à ton template EJS
+    renderSection("Informations Générales", [
+      { label: "Fournisseur", value: data.nom },
+      { label: "Localisation", value: data.localisation },
+      { label: "Statut", value: data.statut }
+    ]);
 
-  <div class="section">
-    <h2>Décoration</h2>
-    <p><span class="label">Décoration :</span> <%= data.decoration || "Non renseigné" %></p>
-  </div>
+    renderSection("Présentation", [
+      { label: "Point de Vente", value: data.Point_de_vente },
+      { label: "Type de point de vente", value: data.categories },
+      { label: "Nom du Propriétaire", value: data.owner_name },
+      { label: "Téléphone", value: data.owner_phone },
+      { label: "Province", value: data.province },
+      { label: "Ville", value: data.ville },
+      { label: "Référence", value: data.reference },
+      { label: "Nom du Gérant", value: data.nom_du_gerant },
+      { label: "Téléphone", value: data.manager_phone }
+    ]);
 
-  <div class="section">
-    <h2>Besoins</h2>
-    <p><span class="label">Besoins Matériels :</span> <%= data.besoins_materiels || "Non renseigné" %></p>
-  </div>
+    renderSection("Distribution", [
+      { label: "Type de client", value: data.Type_Client },
+      { label: "Grossiste", value: data.nom_grossiste },
+      { label: "Réalisation Bralima", value: data.realisation },
+      { label: "Réalisations du mois cochés", value: data.realisation_du_mois },
+      { label: "Prix Brasimba par format", value: data.prix }
+    ]);
 
-  <div class="section">
-    <h2>Négociations</h2>
-    <p><span class="label">Demande de consignation :</span> <%= data.demande || "Non renseigné" %></p>
-    <p><span class="label">Infos concurrents :</span> <%= data.infos_concurrents || "Non renseigné" %></p>
-    <p><span class="label">Avis & Commentaires :</span> <%= data.commentaires || "Non renseigné" %></p>
-  </div>
+    renderSection("Emballage", [
+      { label: "Parc d'emballages Brasimba", value: data.brasimba },
+      { label: "Parc d'emballages Bralima", value: data.bralima }
+    ]);
 
-</body>
+    renderSection("Décoration", [
+      { label: "Décoration", value: data.decoration }
+    ]);
 
-</html>
+    renderSection("Besoins", [
+      { label: "Besoins Matériels", value: data.besoins_materiels }
+    ]);
+
+    renderSection("Négociations", [
+      { label: "Demande de consignation", value: data.demande },
+      { label: "Infos concurrents", value: data.infos_concurrents },
+      { label: "Avis & Commentaires", value: data.commentaires }
+    ]);
+
+    // Footer
+    doc
+      .moveDown(2)
+      .fontSize(10)
+      .fillColor("#aaaaaa")
+      .text("Document généré automatiquement par TONY APP", { align: "center" });
+
+    doc.end();
+
+    stream.on("finish", resolve);
+    stream.on("error", reject);
+  });
+}
