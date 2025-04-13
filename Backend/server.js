@@ -38,10 +38,9 @@ const transporter = nodemailer.createTransport({
 async function generatePDF(html, filePath) {
   let browser = null;
   try {
-    // Lancement de Chromium
-    browser = await chromium.puppeteer.launch({
+    browser = await puppeteer.launch({
       args: chromium.args,
-      executablePath: await chromium.executablePath, // Vérifie l'exécutable de Chromium pour l'environnement
+      executablePath: await chromium.executablePath,
       headless: chromium.headless,
     });
 
@@ -56,6 +55,7 @@ async function generatePDF(html, filePath) {
     }
   }
 }
+
 
 
 // Route pour soumettre le formulaire (depuis /negociations.html)
