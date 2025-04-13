@@ -89,6 +89,12 @@ app.post("/api/send-pdf", async (req, res) => {
 });
 
 
+app.get("/", (req, res) => {
+  res.send("Bienvenue sur l'API de TONY App !");
+});
+
+
+
 
 // Démarrage du serveur
 const PORT = process.env.PORT || 3000;
