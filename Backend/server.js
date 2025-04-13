@@ -40,7 +40,7 @@ async function generatePDF(html, filePath) {
     // Lancement de Chromium
     browser = await chromium.puppeteer.launch({
       args: chromium.args,
-      executablePath: await chromium.executablePath,
+      executablePath: await chromium.executablePath, // Vérifie l'exécutable de Chromium pour l'environnement
       headless: chromium.headless,
     });
 
@@ -55,6 +55,7 @@ async function generatePDF(html, filePath) {
     }
   }
 }
+
 
 // Route pour soumettre le formulaire (depuis /negociations.html)
 app.post("/submit-form", async (req, res) => {
