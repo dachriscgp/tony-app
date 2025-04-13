@@ -50,12 +50,28 @@ function generatePDFWithPDFKit(data, filePath) {
 
     // Fonction réutilisable pour chaque section
     const renderSection = (title, contentArray) => {
+      // Préparer fond rectangle sous le titre
+      const startX = doc.page.margins.left;
+      const startY = doc.y;
+      const pageWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
+      const paddingY = 6;
+
+      // Calculer la hauteur approximative du titre
+      const textHeight = doc.heightOfString(title, { width: pageWidth, align: "left" });
+
+      // Dessiner un rectangle violet clair derrière
       doc
+        .rect(startX, startY - paddingY, pageWidth, textHeight + paddingY * 2)
+        .fill("#5916af");
+
+      // Ecrire le titre par-dessus
+      doc
+        .fillColor("#ffffff")
         .fontSize(16)
-        .fillColor("#5916af")
-        .text(title)
+        .text(title, startX + 10, startY, { align: "left" })
         .moveDown(0.5);
 
+      // Contenu de la section
       contentArray.forEach(({ label, value }) => {
         doc
           .fontSize(12)
@@ -86,7 +102,7 @@ function generatePDFWithPDFKit(data, filePath) {
       { label: "Ville", value: data.ville },
       { label: "Référence", value: data.reference },
       { label: "Nom du Gérant", value: data.nom_du_gerant },
-      { label: "Téléphone", value: data.manager_phone }
+      { label: "Téléphone Gérant", value: data.manager_phone }
     ]);
 
     renderSection("Distribution", [
@@ -121,7 +137,7 @@ function generatePDFWithPDFKit(data, filePath) {
       .moveDown(2)
       .fontSize(10)
       .fillColor("#aaaaaa")
-      .text("Document généré par TONY APP", { align: "center" });
+      .text("Document généré automatiquement par TONY APP", { align: "center" });
 
     doc.end();
 
@@ -129,6 +145,7 @@ function generatePDFWithPDFKit(data, filePath) {
     stream.on("error", reject);
   });
 }
+
 
 
 
