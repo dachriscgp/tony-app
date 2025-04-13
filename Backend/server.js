@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const path = require("path");
-const puppeteer = require("puppeteer");
+const chromium = require("chrome-aws-lambda");
 const nodemailer = require("nodemailer");
 const fs = require("fs");
 
@@ -35,10 +35,10 @@ const transporter = nodemailer.createTransport({
 
 // Fonction pour générer un PDF
 async function generatePDF(html, filePath) {
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined
+  const browser = await chromium.puppeteer.launch({
+    args: chromium.args,
+    executablePath: await chromium.executablePath,
+    headless: chromium.headless,
   });
 
   const page = await browser.newPage();
@@ -46,6 +46,7 @@ async function generatePDF(html, filePath) {
   await page.pdf({ path: filePath, format: "A4", printBackground: true });
   await browser.close();
 }
+
 
 // Route pour soumettre le formulaire (depuis /negociations.html)
 app.post("/submit-form", async (req, res) => {
