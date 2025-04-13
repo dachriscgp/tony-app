@@ -35,18 +35,26 @@ const transporter = nodemailer.createTransport({
 
 // Fonction pour générer un PDF
 async function generatePDF(html, filePath) {
-  const browser = await chromium.puppeteer.launch({
-    args: chromium.args,
-    executablePath: await chromium.executablePath,
-    headless: chromium.headless,
-  });
+  let browser = null;
+  try {
+    // Lancement de Chromium
+    browser = await chromium.puppeteer.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath,
+      headless: chromium.headless,
+    });
 
-  const page = await browser.newPage();
-  await page.setContent(html, { waitUntil: "networkidle0" });
-  await page.pdf({ path: filePath, format: "A4", printBackground: true });
-  await browser.close();
+    const page = await browser.newPage();
+    await page.setContent(html, { waitUntil: "networkidle0" });
+    await page.pdf({ path: filePath, format: "A4", printBackground: true });
+  } catch (error) {
+    console.error("Erreur lors de la génération du PDF :", error);
+  } finally {
+    if (browser) {
+      await browser.close();
+    }
+  }
 }
-
 
 // Route pour soumettre le formulaire (depuis /negociations.html)
 app.post("/submit-form", async (req, res) => {
@@ -88,13 +96,9 @@ app.post("/api/send-pdf", async (req, res) => {
   }
 });
 
-
 app.get("/", (req, res) => {
   res.send("Bienvenue sur l'API de TONY App !");
 });
-
-
-
 
 // Démarrage du serveur
 const PORT = process.env.PORT || 3000;
